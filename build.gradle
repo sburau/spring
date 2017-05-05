@@ -1,3 +1,10 @@
+
+
+System.setProperty('org.gradle.color.error', 'RED')
+System.setProperty("org.gradle.color.failure", "RED")
+System.setProperty("org.gradle.color.progressstatus", "YELLOW")
+System.setProperty("org.gradle.color.success", "GREEN")
+
 buildscript {
 	ext {
 		springBootVersion = '1.5.3.RELEASE'
@@ -39,6 +46,15 @@ dependencies {
 	testCompile(
 			"org.springframework.boot:spring-boot-starter-test:$springBootVersion",
 			"io.rest-assured:rest-assured:3.0.2"
-//			"org.springframework:spring-test:3.2.1.RELEASE",
 	)
+}
+
+test {
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+bootRun {
+	jvmArgs = ["-Dspring.output.ansi.enabled=ALWAYS"]
 }
