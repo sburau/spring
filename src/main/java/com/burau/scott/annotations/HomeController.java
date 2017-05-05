@@ -1,7 +1,7 @@
 package com.burau.scott.annotations;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public @interface HomeController {
 }
