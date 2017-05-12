@@ -1,5 +1,7 @@
 package com.burau.scott;
 
+import com.burau.scott.model.AnotherResponse;
+import com.burau.scott.model.HomeResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -22,14 +24,24 @@ public class MiscApplicationTests {
 
     @Test
     public void homeError() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/home/abc",
-                String.class)).contains("Home exception");
+
+        HomeResponse expectedResponse = new HomeResponse("HomeControllerAdvice");
+
+        HomeResponse response = this.restTemplate.getForObject("http://localhost:" + port + "/home",
+                HomeResponse.class);
+
+        assertEquals(expectedResponse,response);
     }
 
     @Test
     public void anotherError() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/another/def",
-                String.class)).contains("Another exception");
+
+        AnotherResponse expectedResponse = new AnotherResponse("AnotherControllerAdvice");
+
+        AnotherResponse response = this.restTemplate.getForObject("http://localhost:" + port + "/another",
+                AnotherResponse.class);
+
+        assertEquals(expectedResponse,response);
     }
 
 
